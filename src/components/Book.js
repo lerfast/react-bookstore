@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { removeBook } from '../redux/books/booksSlice';
+import AddBookButton from './AddBookButton';
+import RemoveBookButton from './RemoveBookButton';
 
-const Book = ({ book, onDelete }) => {
+const Book = ({ book }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
-  const [progress, setProgress] = useState(book.progress);
+  const dispatch = useDispatch();
 
   const handleDelete = () => {
-    onDelete(book.id);
+    dispatch(removeBook(book.id));
   };
 
   const handleAddComment = () => {
@@ -15,11 +19,6 @@ const Book = ({ book, onDelete }) => {
       setComments((prevComments) => [...prevComments, newComment]);
       setNewComment('');
     }
-  };
-
-  const handleUpdateProgress = () => {
-    const newProgress = (progress + 10) % 101;
-    setProgress(newProgress);
   };
 
   return (
@@ -34,21 +33,17 @@ const Book = ({ book, onDelete }) => {
         {book.gender}
       </p>
       <p>
-        Progress:
-        {progress}
-        %
-      </p>
-      <p>
         Current Chapter:
         {book.currentChapter}
       </p>
       <button type="button" onClick={handleDelete}>Delete</button>
-      <button type="button" onClick={handleUpdateProgress}>Update Progress</button>
+      <AddBookButton title={book.title} author={book.author} />
+      <RemoveBookButton bookId={book.id} />
       <div>
         <h4>Comments</h4>
         <ul>
           {comments.map((comment, index) => (
-            <li key={index}>{comment}</li>// eslint-disable-line react/no-array-index-key
+            <li key={index}>{comment}</li> // eslint-disable-line react/no-array-index-key
           ))}
         </ul>
         <input
@@ -68,11 +63,9 @@ Book.propTypes = {
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     gender: PropTypes.string.isRequired,
-    progress: PropTypes.number.isRequired,
     currentChapter: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default Book;
