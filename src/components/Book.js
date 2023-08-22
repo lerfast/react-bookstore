@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { removeBook } from '../redux/books/booksSlice';
 
-const Book = ({ book, onDelete }) => {
+const Book = ({ book }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [progress, setProgress] = useState(book.progress);
+  const dispatch = useDispatch();
 
   const handleDelete = () => {
-    onDelete(book.id);
+    dispatch(removeBook(book.id));
   };
 
   const handleAddComment = () => {
@@ -72,7 +75,6 @@ Book.propTypes = {
     currentChapter: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default Book;
