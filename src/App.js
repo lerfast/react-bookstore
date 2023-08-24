@@ -7,6 +7,7 @@ import Categories from './components/Categories';
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
 import { fetchBooks } from './redux/books/booksSlice';
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,9 +24,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/categories" element={<Categories />} />
         </Routes>
-        <h2>Bookstore</h2>
-        <BookForm />
         <BookList />
+        <BookForm />
       </div>
     </Router>
   );
