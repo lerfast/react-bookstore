@@ -1,59 +1,38 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { removeBook } from '../redux/books/booksSlice';
-import AddBookButton from './AddBookButton';
-import RemoveBookButton from './RemoveBookButton';
+import { removeBook, updateProgress } from '../redux/books/booksSlice';
 
 const Book = ({ book }) => {
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
+  const [localProgress, setLocalProgress] = useState(book.progress || 0);
   const dispatch = useDispatch();
 
-  const handleDelete = () => {
-    dispatch(removeBook(book.id));
+  const handleRemove = () => {
+    dispatch(removeBook(book.item_id));
   };
 
-  const handleAddComment = () => {
-    if (newComment.trim() !== '') {
-      setComments((prevComments) => [...prevComments, newComment]);
-      setNewComment('');
-    }
+  const handleProgressUpdate = () => {
+    dispatch(updateProgress({ item_id: book.item_id, progress: parseInt(localProgress, 10) }));
   };
 
   return (
-    <div className="book">
-      <h3>{book.title}</h3>
+    <div>
+      <h2>{book.title}</h2>
+      <p>{book.author}</p>
       <p>
-        Author:
-        {book.author}
+        Progress:
+        {book.progress || 0}
+        %
       </p>
-      <p>
-        Gender:
-        {book.gender}
-      </p>
-      <p>
-        Current Chapter:
-        {book.currentChapter}
-      </p>
-      <button type="button" onClick={handleDelete}>Delete</button>
-      <AddBookButton title={book.title} author={book.author} />
-      <RemoveBookButton bookId={book.id} />
-      <div>
-        <h4>Comments</h4>
-        <ul>
-          {comments.map((comment, index) => (
-            <li key={index}>{comment}</li> // eslint-disable-line react/no-array-index-key
-          ))}
-        </ul>
-        <input
-          type="text"
-          placeholder="Add a comment"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <button type="button" onClick={handleAddComment}>Add Comment</button>
-      </div>
+      <input
+        type="number"
+        min="0"
+        max="100"
+        value={localProgress}
+        onChange={(e) => setLocalProgress(e.target.value)}
+      />
+      <button type="button" onClick={handleProgressUpdate}>Update Progress</button>
+      <button type="button" onClick={handleRemove}>Remove Book</button>
     </div>
   );
 };
@@ -62,9 +41,8 @@ Book.propTypes = {
   book: PropTypes.shape({
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    gender: PropTypes.string.isRequired,
-    currentChapter: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    item_id: PropTypes.string.isRequired,
+    progress: PropTypes.number,
   }).isRequired,
 };
 

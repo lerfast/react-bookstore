@@ -10,7 +10,13 @@ const BookForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && author) {
-      const newBook = { title, author, id: Date.now() };
+      const newBook = {
+        item_id: Date.now().toString(),
+        title,
+        author,
+        category: 'Default',
+        progress: 0, // Progress inicial
+      };
       dispatch(addBook(newBook));
       setTitle('');
       setAuthor('');
