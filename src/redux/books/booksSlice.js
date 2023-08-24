@@ -5,7 +5,14 @@ const baseURL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/book
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async () => {
   const response = await axios.get(`${baseURL}/books`);
-  return response.data;
+  const responseData = response.data;
+
+  const booksArray = Object.keys(responseData).map((key) => ({
+    ...responseData[key][0],
+    item_id: key,
+  }));
+
+  return booksArray;
 });
 
 export const addBook = createAsyncThunk('books/addNewBook', async (book) => {

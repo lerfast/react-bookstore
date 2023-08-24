@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Book from './Book';
 import { fetchBooks } from '../redux/books/booksSlice';
 
-const BookList = ({ onDelete }) => {
+const BookList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,14 +15,10 @@ const BookList = ({ onDelete }) => {
   return (
     <div className="book-list">
       {books.map((book) => (
-        <Book key={book.id} book={book} onDelete={onDelete} />
+        <Book key={book.id} book={book} />
       ))}
     </div>
   );
-};
-
-BookList.propTypes = {
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default BookList;
