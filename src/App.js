@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Categories from './components/Categories';
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
+import { fetchBooks } from './redux/books/booksSlice';
 
 function App() {
-  const [books, setBooks] = useState([]);
+  const dispatch = useDispatch();
 
-  const addBook = (newBook) => {
-    setBooks((prevBooks) => [...prevBooks, newBook]);
-  };
-
-  const deleteBook = (bookId) => {
-    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-  };
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, [dispatch]);
 
   return (
     <Router>
@@ -26,8 +24,8 @@ function App() {
           <Route path="/categories" element={<Categories />} />
         </Routes>
         <h2>Bookstore</h2>
-        <BookForm onAdd={addBook} />
-        <BookList books={books} onDelete={deleteBook} />
+        <BookForm />
+        <BookList />
       </div>
     </Router>
   );
