@@ -5,7 +5,9 @@ import './Navigation.css';
 const Navigation = () => (
   <nav className="navigation">
     <ul className="nav-list">
-      <span className="Bookstore-CMS">Bookstore CMS</span>
+      <span className="Bookstore-CMS Text-Style-3">
+        Bookstore CMS
+      </span>
       <li>
         <Link
           className={({ isActive }) => (isActive ? 'active' : '')}

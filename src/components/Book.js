@@ -14,7 +14,7 @@ const Book = ({ book }) => {
 
     <div id="book">
       <div>
-        <p className="gender">{book.gender}</p>
+        <p className="gender">{book.category}</p>
         <h2 className="title">{book.title}</h2>
         <p className="author">{book.author}</p>
         <div className="actions">
@@ -57,7 +57,7 @@ Book.propTypes = {
   book: PropTypes.shape({
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    gender: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
     item_id: PropTypes.string.isRequired,
     progress: PropTypes.number,
   }).isRequired,
