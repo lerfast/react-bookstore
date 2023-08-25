@@ -1,20 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Navigation.css';
 
 const Navigation = () => (
   <nav className="navigation">
     <ul className="nav-list">
-      <li className="nav-item">
-        <Link to="/" className="nav-link">
-          Home
+      <span className="Bookstore-CMS Text-Style-3">
+        Bookstore CMS
+      </span>
+      <li>
+        <Link
+          className={({ isActive }) => (isActive ? 'active' : '')}
+          to="/"
+        >
+          BOOKS
         </Link>
       </li>
-      <li className="nav-item">
-        <Link to="/categories" className="nav-link">
-          Categories
+      <li>
+        <Link
+          className={({ isActive }) => (isActive ? 'active' : '')}
+          to="/categories"
+        >
+          CATEGORIES
         </Link>
       </li>
     </ul>
+    <button className="icon-button" type="button">
+      <img src="profile.svg" alt="profile icon" />
+    </button>
   </nav>
 );
 
