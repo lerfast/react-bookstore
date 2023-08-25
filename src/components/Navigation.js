@@ -26,7 +26,7 @@ const Navigation = () => (
       </li>
     </ul>
     <button className="icon-button" type="button">
-      <img src="Profile.svg" alt="img" />
+      <img src="profile.svg" alt="profile icon" />
     </button>
   </nav>
 );
